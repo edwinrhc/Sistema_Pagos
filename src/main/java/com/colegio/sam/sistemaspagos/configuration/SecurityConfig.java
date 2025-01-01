@@ -16,14 +16,14 @@ public class SecurityConfig {
      return http
              .csrf(csrf -> csrf.disable())
              .authorizeHttpRequests(auth -> auth
-                     .requestMatchers("/public/**").permitAll()
-                     .requestMatchers("/v1/home").authenticated()
-                     .requestMatchers("/v1/admin").hasAuthority("ADMIN")
+                     .requestMatchers("/public/**","/css/**","/js/**", "/img/**").permitAll()
+                     .requestMatchers("/home").authenticated()
+                     .requestMatchers("/admin").hasAuthority("ADMIN")
                      .anyRequest().authenticated()
              )
              .formLogin(form -> form
                      .loginPage("/login")
-                     .defaultSuccessUrl("/v1/home",true)
+                     .defaultSuccessUrl("/home",true)
                      .permitAll()
              )
              .build();
