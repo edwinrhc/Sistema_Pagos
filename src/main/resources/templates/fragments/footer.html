@@ -12,7 +12,7 @@
         Usuario Logeado: <span sec:authentication="name"></span> | Roles: <span sec:authentication="principal.authorities"></span>
     </p>
     <p sec:authorize="isAuthenticated()" class="text-center text-sm">
-        © <span id="currentYear"></span> Todos los derechos reservados.
+        © <span id="currentYear" th:text="${#dates.format(today, 'yyyy')}"></span> Todos los derechos reservados.
     </p>
     <p sec:authorize="isAuthenticated()" class="text-center text-sm" th:text="'Colegio SAM '+${version}">
         <!--        -->
@@ -20,7 +20,9 @@
     <script th:src="@{/public/sweetalert2/sweetalert2.min.js}"></script>
     <script th:src="@{/public/fontawesome/fontawesome-6.5.2.js}"></script>
     <script th:src="@{/js/home/home.js}"></script>
-
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
 
 </footer>
 
