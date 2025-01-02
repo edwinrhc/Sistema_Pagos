@@ -4,6 +4,7 @@ package com.colegio.sam.sistemaspagos.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class Grade {
     private String nivel; // "primaria" o "secundaria"
 
     @Column(nullable = false,precision = 10, scale = 2)
-    private Double montoMensualidad;
+    private BigDecimal montoMensualidad;
 
     @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Student> estudiantes;

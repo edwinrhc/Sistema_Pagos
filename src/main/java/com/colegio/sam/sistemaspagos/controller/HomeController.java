@@ -28,6 +28,8 @@ public class HomeController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String admin(){
         System.out.println("Admin endpoint accessed");
-        return "Admin";
+        return "admin";
     }
+
+
 }

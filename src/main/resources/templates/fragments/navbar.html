@@ -14,14 +14,24 @@
         <!-- Imagen del logo a la izquierda -->
         <div class="flex items-center">
             <a th:href="@{/home}">
-<!--                <img th:src="@{/img/stLogo.png}" alt="Logo" class="mr-3"> &lt;!&ndash; Cambia "logo.png" por la ruta a tu logo &ndash;&gt;-->
-                <span class="text-black text-xl font-semibold"></span></a>
+                <img th:src="@{/img/img.png}" alt="Logo" class="mr-3" style="height: 60px; width: 60px;"></a> <!-- Cambia "logo.png" por la ruta a tu logo -->
             <h2 class="text-3xl font-bold text-center text-gray-700">Colegio SAM - Pagos</h2>
+
         </div>
 
         <!-- Enlaces de navegación -->
         <div class="hidden md:flex space-x-6">
             <a th:href="@{/home}" class="text-black hover:text-gray-300">Inicio</a>
+        </div>
+
+        <!-- Enlaces de navegación -->
+        <div class="hidden md:flex space-x-6">
+            <a th:href="@{/admin}" class="text-black hover:text-gray-300">Panel Administrador</a>
+        </div>
+
+        <!-- Enlaces de navegación -->
+        <div class="hidden md:flex space-x-6">
+            <a th:href="@{/admin}" class="text-black hover:text-gray-300">Reportes</a>
         </div>
 
         <!-- Usuario logueado -->
