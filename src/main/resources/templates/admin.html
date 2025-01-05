@@ -14,21 +14,29 @@
 
         <!-- Tarjetas de navegación a las funcionalidades -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
             <!-- Tarjeta 1 -->
+            <div class="bg-blue-100 p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
+                <h2 class="text-xl font-bold text-indigo-600">Listado de Padres</h2>
+                <p class="text-gray-600">Accede a la sección de padres para gestionar los pagos escolares.</p>
+                <a th:href="@{/admin/parents}" class="text-indigo-500 hover:underline mt-2 inline-block">Ir a →</a>
+            </div>
+
+            <!-- Tarjeta 2 -->
             <div class="bg-blue-100 p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
                 <h2 class="text-xl font-bold text-blue-600">Listado de Alumnos</h2>
                 <p class="text-gray-600">Accede a la sección de alumnos para gestionar los pagos escolares.</p>
                 <a th:href="@{/admin/students}" class="text-blue-500 hover:underline mt-2 inline-block">Ir a →</a>
             </div>
 
-            <!-- Tarjeta 2 -->
+            <!-- Tarjeta 3 -->
             <div class="bg-green-100 p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
                 <h2 class="text-xl font-bold text-green-600">Historial de Pagos</h2>
                 <p class="text-gray-600">Consulta los pagos realizados por los alumnos.</p>
                 <a th:href="@{/historial}" class="text-green-500 hover:underline mt-2 inline-block">Ver Historial →</a>
             </div>
 
-            <!-- Tarjeta 3 -->
+            <!-- Tarjeta 4 -->
             <div class="bg-yellow-100 p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
                 <h2 class="text-xl font-bold text-yellow-600">Reportes</h2>
                 <p class="text-gray-600">Genera reportes detallados sobre los pagos escolares.</p>

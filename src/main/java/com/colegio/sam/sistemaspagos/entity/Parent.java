@@ -5,7 +5,12 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
-@Table(name="parents")
+@Table(
+        name="parents",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email",name="UNIQUE_PARENT_EMAIL")
+        }
+)
 @Data
 public class Parent {
 
@@ -19,7 +24,7 @@ public class Parent {
     @Column(nullable = false)
     private String apellido;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
     private String telefono;

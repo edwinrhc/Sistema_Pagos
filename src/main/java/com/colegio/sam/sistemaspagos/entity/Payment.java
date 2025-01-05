@@ -19,11 +19,18 @@ public class Payment {
     private LocalDateTime fecha;
 
     @ManyToOne
-    @JoinColumn(name="student_id", nullable = false)
+    @JoinColumn(
+            name="fk_student_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_PAYMENT_STUDENT"))
     private Student estudiante;
 
     @ManyToOne
-    @JoinColumn(name = "parent_id", nullable = false)
+    @JoinColumn(
+            name = "fk_parent_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_PAYMENT_PARENT")
+    )
     private Parent parent;
 
 }

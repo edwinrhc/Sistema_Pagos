@@ -19,12 +19,19 @@ public class Student {
     private String apellido;
 
     @ManyToOne
-    @JoinColumn(name = "parent_id", nullable = false)
+    @JoinColumn(
+            name = "fk_parent_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_STUDENT_PARENT")
+    )
     private Parent parent;
 
     //  Grade
     @ManyToOne
-    @JoinColumn(name = "grade_id", nullable = false)
+    @JoinColumn(
+            name = "FK_grade_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_STUDENT_GRADE"))
     private Grade grade;
 
 }

@@ -26,6 +26,8 @@ public class Grade {
     @Column(nullable = false,precision = 10, scale = 2)
     private BigDecimal montoMensualidad;
 
-    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "grade",
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Student> estudiantes;
 }

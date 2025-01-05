@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head :: head"></head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+<!-- Navbar -->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<!-- Contenido principal -->
+<main class="flex-grow">
+    <div class="container mx-auto p-6 bg-white shadow-md rounded-lg mt-4">
+        <h1 class="text-4xl font-bold text-center text-gray-700 mb-6">Gestión de Padres</h1>
+        <p class="text-center text-gray-600 mb-8">Aquí puedes agregar, editar o inactivar Padres.</p>
+
+        <!-- Botón para agregar un parents -->
+        <div class="mb-4 flex justify-end">
+            <button
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                    onclick="window.location.href='/parents/add'">
+                Agregar Padres
+            </button>
+        </div>
+
+        <!-- Tabla de parents -->
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full text-left bg-gray-100 rounded-lg">
+                <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-6">ID</th>
+                    <th class="py-3 px-6">Tipo Doc</th>
+                    <th class="py-3 px-6">DNI</th>
+                    <th class="py-3 px-6">Nombre</th>
+                    <th class="py-3 px-6">Apellido</th>
+                    <th class="py-3 px-6">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Ejemplo de iteración Thymeleaf -->
+                <tr th:each="student : ${students}" class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6" th:text="${student.id}"></td>
+                    <td class="py-3 px-6" th:text="${student.id}"></td>
+                    <td class="py-3 px-6" th:text="${student.nombre}"></td>
+                    <td class="py-3 px-6" th:text="${student.apellido}"></td>
+                    <td class="py-3 px-6" th:text="${student.parent.nombre + ' ' + student.parent.apellido}"></td>
+                    <td class="py-3 px-6">
+                        <div class="flex space-x-2">
+                            <!-- Botón para editar -->
+                            <button
+                                    class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded"
+                                    th:onclick="'window.location.href=\'/students/edit/' + ${student.id}'">
+                                Editar
+                            </button>
+
+                            <!-- Botón para inactivar -->
+                            <form th:action="@{/students/inactivate/{id}(id=${student.id})}" method="post">
+                                <button
+                                        type="submit"
+                                        class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded">
+                                    Inactivar
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Mostrar mensaje si no hay estudiantes -->
+                <tr th:if="${#lists.isEmpty(students)}">
+                    <td colspan="5" class="text-center text-gray-500 py-4">No existe registros.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer th:replace="fragments/footer :: footer" class="bg-gray-800 text-white py-4"></footer>
+</body>
+</html>

@@ -15,4 +15,12 @@ public class AdminController {
 
         return "admin/students";
     }
+
+
+    @GetMapping("/parents")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String parents(){
+
+        return "admin/parents";
+    }
 }
