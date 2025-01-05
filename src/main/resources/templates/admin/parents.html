@@ -16,7 +16,7 @@
         <div class="mb-4 flex justify-end">
             <button
                     class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                    onclick="window.location.href='/parents/add'">
+                    onclick="modalRegistroPadres()">
                 Agregar Padres
             </button>
         </div>
@@ -70,8 +70,23 @@
             </table>
         </div>
     </div>
-</main>
 
+    <!-- Modal -->
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden" id="modalParents"
+         role="dialog" aria-hidden="true">
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full mx-4">
+
+
+            <!-- Modal Body -->
+            <div id="modalParentsContent" class="px-4 py-3">
+                <!-- Aquí se cargará el contenido dinámico -->
+            </div>
+
+        </div>
+    </div>
+    <!--Fin  Modal -->
+</main>
+<script th:src="@{/js/admin/parents.js}"></script>
 <!-- Footer -->
 <footer th:replace="fragments/footer :: footer" class="bg-gray-800 text-white py-4"></footer>
 </body>

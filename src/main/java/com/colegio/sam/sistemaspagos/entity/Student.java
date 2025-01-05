@@ -3,6 +3,8 @@ package com.colegio.sam.sistemaspagos.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "students")
 @Data
@@ -10,7 +12,7 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idStudent;
 
     @Column(nullable = false)
     private String nombre;
@@ -33,5 +35,10 @@ public class Student {
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_STUDENT_GRADE"))
     private Grade grade;
+
+    private Date createdAt;
+    private String createdBy;
+    private Date updatedAt;
+    private String updatedBy;
 
 }

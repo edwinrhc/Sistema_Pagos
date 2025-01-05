@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "payments")
@@ -12,7 +13,7 @@ public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idPayment;
     private Double monto;
     private String metodoPago;
     private String estado;
@@ -32,5 +33,10 @@ public class Payment {
             foreignKey = @ForeignKey(name = "FK_PAYMENT_PARENT")
     )
     private Parent parent;
+
+    private Date createdAt;
+    private String createdBy;
+    private Date updatedAt;
+    private String updatedBy;
 
 }

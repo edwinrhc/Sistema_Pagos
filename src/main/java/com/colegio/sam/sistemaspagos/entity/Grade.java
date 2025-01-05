@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Grade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idGrade;
 
     @Column(nullable = false)
     private String nombre;
@@ -30,4 +31,9 @@ public class Grade {
             mappedBy = "grade",
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Student> estudiantes;
+
+    private Date createdAt;
+    private String createdBy;
+    private Date updatedAt;
+    private String updatedBy;
 }
