@@ -17,7 +17,7 @@ function modalRegistroPadres() {
     <h4 class="text-2xl font-bold mb-6">Nuevo Registro - Padres</h4>
     
     <div class="mb-4">
-        <input type="hidden" name="idParent" value="${idParent}"> <!-- Campo oculto para idProcesoJudiciales -->
+      Campo oculto para idProcesoJudiciales -->
         <label for="nombre" class="block font-semibold">Nombre:</label>
         <input id="nombre" name="nombre" class="w-full p-2 border rounded"/>
     </div>
@@ -60,6 +60,15 @@ function modalRegistroPadres() {
 
 }
 
+
+function guardarPadre(){
+    const procesoRegistroPadres = {
+    nombre : $('#nombre').val(),
+    apellido_paterno : $('#apellido_paterno').val(),
+    apellido_materno : $('#apellido_materno').val(),
+
+    };
+}
 
 
 
