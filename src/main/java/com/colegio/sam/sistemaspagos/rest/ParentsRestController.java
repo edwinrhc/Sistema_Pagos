@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -31,14 +32,19 @@ public class ParentsRestController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody ParentsDTO parentsDTO){
+    public ResponseEntity<?> create(@Validated @RequestBody ParentsDTO parentsDTO){
 
         try{
             parentService.guardarParent(parentsDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(parentsDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Registro creado exitosamente.");
 
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage()+ " Error al crear el registro de Padres");
+        }
+       catch (IllegalArgumentException e){
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor: " + e.getMessage());
         }
 
     }

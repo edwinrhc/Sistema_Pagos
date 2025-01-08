@@ -1,6 +1,12 @@
 // Variables globales
 const idParent = $("#idParent").val();
 
+const regexTelefono = /^[0-9]{7,15}$/; // Solo números entre 7 y 15 dígitos
+const regexNoConsecutivos = /^(?!.*(\d)\1{2,}).*$/; // Evitar números consecutivos (123456)
+const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/; // Solo letras y espacios
+const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/; // Validar formato de correo
+
+
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -17,7 +23,7 @@ function modalRegistroPadres() {
     <h4 class="text-2xl font-bold mb-6">Nuevo Registro - Padres</h4>
     
     <div class="mb-4">
-      Campo oculto para idProcesoJudiciales -->
+      
         <label for="nombre" class="block font-semibold">Nombre:</label>
         <input id="nombre" name="nombre" class="w-full p-2 border rounded"/>
     </div>
@@ -63,11 +69,140 @@ function modalRegistroPadres() {
 
 function guardarPadre(){
     const procesoRegistroPadres = {
-    nombre : $('#nombre').val(),
-    apellido_paterno : $('#apellido_paterno').val(),
-    apellido_materno : $('#apellido_materno').val(),
-
+    nombre : limpiarEspacios($('#nombre').val()),
+    apellido_paterno : limpiarEspacios($('#apellido_paterno').val()),
+    apellido_materno : limpiarEspacios($('#apellido_materno').val()),
+    email: $('#email').val().trim(),
+    telefono: $('#telefono').val().trim()
     };
+
+    const nombresCampos = {
+        nombre: 'El nombre es obligatorio',
+        apellido_paterno: 'El apellido paterno es obligatorio',
+        apellido_materno: 'El apellido materno es obligatorio',
+        email: 'El email es obligatorio',
+        telefono: 'El telefono es obligatorio'
+    };
+
+    const limitesCampos = {
+        nombre: 50,
+        apellido_paterno: 50,
+        apellido_materno: 50,
+        email: 50,
+        telefono: 9
+    };
+
+    for(const  [campo,valor] of Object.entries(procesoRegistroPadres)){
+        if(!valor.trim()){
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campo obligatorio',
+                text: `${nombresCampos[campo]}`,
+                confirmButtonText: 'Entendido'
+            });
+            return;
+        }
+        // Validación de longitud máxima
+        if (valor.length > limitesCampos[campo]) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Campo demasiado largo',
+                text: `El campo ${campo} no debe exceder los ${limitesCampos[campo]} caracteres.`,
+                confirmButtonText: 'Entendido'
+            });
+            return;
+        }
+
+        //Validación de formatos email
+        if(campo === 'email' && !regexEmail.test(valor)){
+            Swal.fire({
+                icon:'error',
+                title: 'Correo inválido',
+                text: 'Por favor, ingrese un correo electrónico válido',
+                confirmButtonText: 'Ententido',
+            });
+            return;
+        }
+
+        // Validación de formato y longitud de teléfono
+        if (campo === 'telefono') {
+            if (!/^\d+$/.test(valor)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Teléfono inválido',
+                    text: 'El teléfono no debe contener letras ni caracteres especiales.',
+                    confirmButtonText: 'Entendido',
+                });
+                return;
+            }
+            if (valor.length !== limitesCampos[campo]) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Teléfono inválido',
+                    text: `El teléfono debe tener exactamente ${limitesCampos[campo]} dígitos.`,
+                    confirmButtonText: 'Entendido',
+                });
+                return;
+            }
+        }
+
+
+
+        if ((campo === 'nombre' || campo === 'apellido_paterno' || campo === 'apellido_materno') && !regexNombre.test(valor)) {
+
+            const campoTexto = {
+                nombre: 'Nombre',
+                apellido_paterno: 'Apellido Paterno',
+                apellido_materno: 'Apellido Materno'
+            }
+
+            Swal.fire({
+                icon: 'error',
+                title: `${campoTexto[campo]} inválido`,
+                text: `El campo ${campoTexto[campo]} no debe contener caracteres especiales ni números.`,
+                confirmButtonText: 'Entendido',
+            });
+            return;
+        }
+
+    }
+
+    $.ajax({
+        url: '/api/parents/create',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(procesoRegistroPadres),
+
+        success: function (response) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Registro exitoso',
+                text: response,
+                confirmButtonText: 'Perfecto'
+            }).then(() => {
+                cerrarModal();
+                location.reload();
+
+            })
+        },
+        error: function (xhr, status, error) {
+            console.log("Error: ", xhr.responseText);
+            // Manejo de errores
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al registrar',
+                text: xhr.responseText ||'Hubo un problema al intentar registrar. Inténtelo nuevamente.',
+                confirmButtonText: 'Entendido'
+            });
+        }
+    });
+
+
+}
+
+
+function limpiarEspacios(valor){
+    return valor.replace(/\s+/g, ' ').trim();
 }
 
 
