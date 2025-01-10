@@ -40,6 +40,8 @@ public class ParentServiceImpl implements IParentService {
             }
 
             Parent parent = new Parent();
+            parent.setTipo_doc(parentsDTO.getTipo_doc());
+            parent.setNum_doc(parentsDTO.getNum_doc());
             parent.setNombre(parentsDTO.getNombre());
             parent.setApellido_paterno(parentsDTO.getApellido_paterno());
             parent.setApellido_materno(parentsDTO.getApellido_materno());

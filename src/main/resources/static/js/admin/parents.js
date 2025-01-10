@@ -22,6 +22,26 @@ function modalRegistroPadres() {
  <form id="parentsNew" style="max-width: 400px;">
     <h4 class="text-2xl font-bold mb-6">Nuevo Registro - Padres</h4>
     
+<div class="mb-4">
+    <!-- Select para Tipo de Documento -->
+    <label for="tipo_doc" class="block font-semibold">Tipo de Documento:</label>
+    <select id="tipo_doc" name="tipo_doc" 
+            class="w-full p-2 border rounded" 
+            required>
+        <option value="" disabled selected>Seleccione un tipo de documento</option>
+        <option value="DNI">DNI</option>
+        <option value="C.Extr">Carnet de Extranjería</option>
+        <option value="Pasaporte">Pasaporte</option>
+    </select>
+</div>
+
+    <div class="mb-4">
+      
+        <label for="num_doc" class="block font-semibold">Numero de documento:</label>
+        <input id="num_doc" name="num_doc" class="w-full p-2 border rounded"/>
+    </div>
+    
+    
     <div class="mb-4">
       
         <label for="nombre" class="block font-semibold">Nombre:</label>

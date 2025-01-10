@@ -29,6 +29,12 @@ public class Parent implements Serializable {
     private Long idParent;
 
     @Column(nullable = false)
+    private String tipo_doc;
+
+    @Column(nullable = false)
+    private String num_doc;
+
+    @Column(nullable = false)
     private String nombre;
 
     @Column(nullable = false)
@@ -68,23 +74,6 @@ public class Parent implements Serializable {
         updatedAt = new Date();
     }
 
-    public Parent(Long idParent, String nombre, String apellido_paterno, String apellido_materno, String email, String telefono, Date createdAt, String createdBy, Date updatedAt, String updatedBy, List<Student> hijos) {
-        this.idParent = idParent;
-        this.nombre = nombre;
-        this.apellido_paterno = apellido_paterno;
-        this.apellido_materno = apellido_materno;
-        this.email = email;
-        this.telefono = telefono;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
-        this.updatedAt = updatedAt;
-        this.updatedBy = updatedBy;
-        this.hijos = hijos;
-    }
-
-
-    public Parent() {
-    }
 
     public Long getIdParent() {
         return idParent;
@@ -92,6 +81,22 @@ public class Parent implements Serializable {
 
     public void setIdParent(Long idParent) {
         this.idParent = idParent;
+    }
+
+    public String getTipo_doc() {
+        return tipo_doc;
+    }
+
+    public void setTipo_doc(String tipo_doc) {
+        this.tipo_doc = tipo_doc;
+    }
+
+    public String getNum_doc() {
+        return num_doc;
+    }
+
+    public void setNum_doc(String num_doc) {
+        this.num_doc = num_doc;
     }
 
     public String getNombre() {
@@ -174,5 +179,22 @@ public class Parent implements Serializable {
         this.hijos = hijos;
     }
 
+    public Parent() {
+    }
 
+    public Parent(Long idParent, String tipo_doc, String num_doc, String nombre, String apellido_paterno, String apellido_materno, String email, String telefono, Date createdAt, String createdBy, Date updatedAt, String updatedBy, List<Student> hijos) {
+        this.idParent = idParent;
+        this.tipo_doc = tipo_doc;
+        this.num_doc = num_doc;
+        this.nombre = nombre;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+        this.email = email;
+        this.telefono = telefono;
+        this.createdAt = createdAt;
+        this.createdBy = createdBy;
+        this.updatedAt = updatedAt;
+        this.updatedBy = updatedBy;
+        this.hijos = hijos;
+    }
 }

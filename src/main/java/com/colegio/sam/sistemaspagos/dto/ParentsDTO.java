@@ -21,6 +21,17 @@ public class ParentsDTO {
 
     private Long idParent;
 
+
+    @NotBlank(message = "El tipo de documento es obligatorio")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s\\.]+$", message = "El tipo de documento solo puede contener letras, espacios y el punto (.)")
+    private String tipo_doc;
+
+    @NotBlank(message = "El número de documento es obligatorio")
+    @Pattern(regexp = "^(\\d{7,15}|[A-Za-z0-9\\.\\-]{7,15})$",
+            message = "El número de documento debe tener entre 7 y 15 caracteres alfanuméricos. Para documentos nacionales, solo se permiten números.")
+    private String num_doc;
+
+
     @NotBlank(message = "El nombre es obligatorio")
     @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", message = "El nombre solo puede contener letras y espacios")
     private String nombre;
@@ -51,13 +62,28 @@ public class ParentsDTO {
 //    @JsonProperty("hijos")
     private List<Student> hijos;
 
-
     public Long getIdParent() {
         return idParent;
     }
 
     public void setIdParent(Long idParent) {
         this.idParent = idParent;
+    }
+
+    public String getTipo_doc() {
+        return tipo_doc;
+    }
+
+    public void setTipo_doc(String tipo_doc) {
+        this.tipo_doc = tipo_doc;
+    }
+
+    public String getNum_doc() {
+        return num_doc;
+    }
+
+    public void setNum_doc(String num_doc) {
+        this.num_doc = num_doc;
     }
 
     public String getNombre() {
@@ -98,5 +124,45 @@ public class ParentsDTO {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public List<Student> getHijos() {
+        return hijos;
+    }
+
+    public void setHijos(List<Student> hijos) {
+        this.hijos = hijos;
     }
 }
