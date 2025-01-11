@@ -27,10 +27,11 @@
                 <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
 
-<!--                    <th class="py-3 px-6">Tipo Doc</th>-->
-<!--                    <th class="py-3 px-6">DNI</th>-->
+                    <th class="py-3 px-6">TIPO DOC</th>
+                    <th class="py-3 px-6">DNI</th>
                     <th class="py-3 px-6">Nombre</th>
-                    <th class="py-3 px-6">Apellido</th>
+                    <th class="py-3 px-6">Apellido Paterno</th>
+                    <th class="py-3 px-6">Apellido Materno</th>
                     <th class="py-3 px-6">Acciones</th>
                 </tr>
                 </thead>
@@ -38,6 +39,8 @@
                 <!-- Ejemplo de iteración Thymeleaf -->
                 <tr th:each="parent : ${parents}" class="border-b border-gray-200 hover:bg-gray-100">
 
+                    <td class="py-3 px-6" th:text="${parent.tipo_doc}"></td>
+                    <td class="py-3 px-6" th:text="${parent.num_doc}"></td>
                     <td class="py-3 px-6" th:text="${parent.nombre}"></td>
                     <td class="py-3 px-6" th:text="${parent.apellido_paterno}"></td>
                     <td class="py-3 px-6" th:text="${parent.apellido_materno}"></td>

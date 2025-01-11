@@ -7,6 +7,7 @@ const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/; // Solo letras y es
 const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/; // Validar formato de correo
 
 
+
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -36,9 +37,8 @@ function modalRegistroPadres() {
 </div>
 
     <div class="mb-4">
-      
         <label for="num_doc" class="block font-semibold">Numero de documento:</label>
-        <input id="num_doc" name="num_doc" class="w-full p-2 border rounded"/>
+        <input id="num_doc" name="num_doc" class="w-full p-2 border rounded" oninput="upperCase(this)"/>
     </div>
     
     
@@ -89,6 +89,8 @@ function modalRegistroPadres() {
 
 function guardarPadre(){
     const procesoRegistroPadres = {
+    tipo_doc : $('#tipo_doc').val().trim(),
+    num_doc : limpiarEspacios($('#num_doc').val()),
     nombre : limpiarEspacios($('#nombre').val()),
     apellido_paterno : limpiarEspacios($('#apellido_paterno').val()),
     apellido_materno : limpiarEspacios($('#apellido_materno').val()),
@@ -97,6 +99,8 @@ function guardarPadre(){
     };
 
     const nombresCampos = {
+        tipo_doc: 'El tipo de documento es obligatorio',
+        num_doc: 'El numero de documento es obligatorio',
         nombre: 'El nombre es obligatorio',
         apellido_paterno: 'El apellido paterno es obligatorio',
         apellido_materno: 'El apellido materno es obligatorio',
@@ -230,3 +234,9 @@ function limpiarEspacios(valor){
 function cerrarModal() {
     $('#modalParents').addClass('hidden');
 }
+
+function upperCase(input){
+    input.value = input.value.toUpperCase();
+}
+
+

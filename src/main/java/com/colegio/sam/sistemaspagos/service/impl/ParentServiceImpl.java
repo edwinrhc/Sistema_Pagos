@@ -47,6 +47,7 @@ public class ParentServiceImpl implements IParentService {
             parent.setApellido_materno(parentsDTO.getApellido_materno());
             parent.setEmail(parentsDTO.getEmail());
             parent.setTelefono(parentsDTO.getTelefono());
+            parent.setEstado(parentsDTO.getEstado());
 
             // Obtener el usuario autenticado
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

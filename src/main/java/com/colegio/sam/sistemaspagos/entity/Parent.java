@@ -49,6 +49,9 @@ public class Parent implements Serializable {
     @Column(nullable = false)
     private String telefono;
 
+    @Column(nullable = false)
+    private Integer estado = 1;
+
 
     private Date createdAt;
 
@@ -179,10 +182,20 @@ public class Parent implements Serializable {
         this.hijos = hijos;
     }
 
-    public Parent() {
+
+    public Integer getEstado() {
+        return estado;
     }
 
-    public Parent(Long idParent, String tipo_doc, String num_doc, String nombre, String apellido_paterno, String apellido_materno, String email, String telefono, Date createdAt, String createdBy, Date updatedAt, String updatedBy, List<Student> hijos) {
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
+    public Parent() {
+    this.estado = 1;
+    }
+
+    public Parent(Long idParent, String tipo_doc, String num_doc, String nombre, String apellido_paterno, String apellido_materno, String email, String telefono, Integer estado, Date createdAt, String createdBy, Date updatedAt, String updatedBy, List<Student> hijos) {
         this.idParent = idParent;
         this.tipo_doc = tipo_doc;
         this.num_doc = num_doc;
@@ -191,6 +204,7 @@ public class Parent implements Serializable {
         this.apellido_materno = apellido_materno;
         this.email = email;
         this.telefono = telefono;
+        this.estado = estado;
         this.createdAt = createdAt;
         this.createdBy = createdBy;
         this.updatedAt = updatedAt;

@@ -23,7 +23,7 @@ public class ParentsDTO {
 
 
     @NotBlank(message = "El tipo de documento es obligatorio")
-    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s\\.]+$", message = "El tipo de documento solo puede contener letras, espacios y el punto (.)")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", message = "El tipo de documento solo puede contener letras, espacios y el punto (.)")
     private String tipo_doc;
 
     @NotBlank(message = "El número de documento es obligatorio")
@@ -52,6 +52,9 @@ public class ParentsDTO {
     @NotBlank(message = "El teléfono es obligatorio")
     @Pattern(regexp = "^(?!.*(\\d)\\1{2,})([0-9]{7,15})$", message = "El teléfono debe ser numérico y no contener números consecutivos")
     private String telefono;
+
+
+    private Integer estado;
 
 
     private Date createdAt;
@@ -164,5 +167,13 @@ public class ParentsDTO {
 
     public void setHijos(List<Student> hijos) {
         this.hijos = hijos;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 }
