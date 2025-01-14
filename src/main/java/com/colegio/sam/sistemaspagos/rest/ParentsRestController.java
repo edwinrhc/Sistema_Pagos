@@ -1,6 +1,7 @@
 package com.colegio.sam.sistemaspagos.rest;
 
 import com.colegio.sam.sistemaspagos.dto.ParentsDTO;
+import com.colegio.sam.sistemaspagos.entity.Parent;
 import com.colegio.sam.sistemaspagos.service.IParentService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,30 @@ public class ParentsRestController {
         Map<String,Object> response = new HashMap<>();
         response.put("parents", parentsDTO);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?> getParentsEdit(@PathVariable("id") Long id){
+        Parent parent = parentService.findOne(id);
+
+        if(parent == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        ParentsDTO parentsDTO = new ParentsDTO();
+
+        parentsDTO.setIdParent(parent.getIdParent());
+        parentsDTO.setTipo_doc(parent.getTipo_doc());
+        parentsDTO.setNum_doc(parent.getNum_doc());
+        parentsDTO.setNombre(parent.getNombre());
+        parentsDTO.setApellido_paterno(parent.getApellido_paterno());
+        parentsDTO.setApellido_materno(parent.getApellido_materno());
+        parentsDTO.setEmail(parent.getEmail());
+        parentsDTO.setTelefono(parent.getTelefono());
+        parentsDTO.setEstado(parent.getEstado());
+
+        return ResponseEntity.ok(parentsDTO);
+
     }
 
     @PostMapping("/create")

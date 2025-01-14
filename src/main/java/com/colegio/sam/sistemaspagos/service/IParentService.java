@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface IParentService {
 
-    List<Parent> getAllParents();
+     List<Parent> getAllParents();
 
      Parent saveParent(Parent parent);
+
+     Parent findOne(Long id);
 
      void guardarParent(ParentsDTO parentsDTO) throws ParseException;
 

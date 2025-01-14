@@ -225,6 +225,79 @@ function guardarPadre(){
 }
 
 
+function abrirModalParentEdit(idParent){
+
+    //Capturamos los datos
+    $.ajax({
+        url: '/api/parents/get/' + idParent, type: 'GET', dataType: 'json', success: function (data) {
+            // Genera el formulario vacío en el modal
+            let content = `
+        <form id="parentsNew" style="max-width: 400px;">
+          <h4 class="text-2xl font-bold mb-6">Editar Registro - Padres</h4>
+            
+        <div class="mb-4">
+            <!-- Select para Tipo de Documento -->
+            <label for="tipo_doc" class="block font-semibold">Tipo de Documento:</label>
+            <select id="tipo_doc" name="tipo_doc" 
+                    class="w-full p-2 border rounded" 
+                    required>
+                <option value="" disabled selected>Seleccione un tipo de documento</option>
+             <option value="DNI" ${data.tipo_doc === "DNI" ? "selected" : ""}>DNI</option>
+                <option value="C.Extr" ${data.tipo_doc === "C.Extr" ? "selected" : ""}>Carnet de Extranjería</option>
+                <option value="Pasaporte" ${data.tipo_doc === "Pasaporte" ? "selected" : ""}>Pasaporte</option>
+            </select>
+        </div>
+        
+            <div class="mb-4">
+                <label for="num_doc" class="block font-semibold">Numero de documento:</label>
+                <input id="num_doc" name="num_doc" class="w-full p-2 border rounded" oninput="upperCase(this)" value="${data.num_doc || ''}"/>
+            </div>
+            
+            
+            <div class="mb-4">
+              
+                <label for="nombre" class="block font-semibold">Nombre:</label>
+                <input id="nombre" name="nombre" class="w-full p-2 border rounded"  value="${data.nombre || ''}" />
+            </div>
+            
+            <div class="mb-4">
+                <label for="apellido_paterno" class="block font-semibold">Apellido Paterno:</label>
+                <input id="apellido_paterno" name="apellido_paterno" class="w-full p-2 border rounded"  value="${data.apellido_paterno || ''}"/>
+            </div>
+            
+            <div class="mb-4">
+                <label for="apellido_materno" class="block font-semibold">Apellido Materno:</label>
+                <input id="apellido_materno" name="apellido_materno" class="w-full p-2 border rounded" value="${data.apellido_materno || ''}"/>
+            </div>
+        
+            <div class="mb-4">
+                <label for="email" class="block font-semibold">Email:</label>
+                <input id="email" name="email" class="w-full p-2 border rounded" value="${data.email || ''}"/>
+            </div>
+        
+            <div class="mb-4">
+                <label for="telefono" class="block font-semibold">Teléfono:</label>
+                <input id="telefono" name="telefono" class="w-full p-2 border rounded" value="${data.telefono || ''}"/>
+            </div>
+        
+            <div class="flex justify-end mt-4">
+                <button type="button" onclick="guardarPadre()" class="bg-blue-600 text-white px-4 py-2 rounded-md mr-2">Guardar</button>
+                <button type="button" onclick="cerrarModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cerrar</button>
+            </div>
+        </form>
+
+            `;
+            // Genera el formulario vacío en el modal
+            $('#modalParentsContent').html(content); // Inserta el formulario vacío en el modal
+            $('#modalParents').removeClass('hidden'); // Muestra el modal
+        }, error: function (xhr, status, error) {
+            alert("Error al cargar el formulario.");
+
+        }
+    })
+
+}
+
 function limpiarEspacios(valor){
     return valor.replace(/\s+/g, ' ').trim();
 }

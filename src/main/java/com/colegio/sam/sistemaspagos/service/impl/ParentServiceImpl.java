@@ -5,6 +5,8 @@ import com.colegio.sam.sistemaspagos.entity.Parent;
 import com.colegio.sam.sistemaspagos.repository.ParentRepository;
 import com.colegio.sam.sistemaspagos.service.IParentService;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +17,9 @@ import java.util.List;
 
 @Service
 public class ParentServiceImpl implements IParentService {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(ParentServiceImpl.class);
 
     @Autowired
     private ParentRepository parentRepository;
@@ -27,6 +32,17 @@ public class ParentServiceImpl implements IParentService {
     @Override
     public Parent saveParent(Parent parent) {
         return parentRepository.save(parent);
+    }
+
+    @Override
+    public Parent findOne(Long id) {
+        try {
+            return parentRepository.findById(id).orElse(null);
+        } catch (Exception e) {
+            logger.error("Error al encontrar el padre con ID"+ id ,e );
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -64,7 +80,7 @@ public class ParentServiceImpl implements IParentService {
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error al guardar el registro de Padres" + e.getMessage(),e);
+            throw new RuntimeException("Error al guardar el registro de Padres" + e.getMessage(), e);
         }
     }
 

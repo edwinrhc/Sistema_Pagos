@@ -32,7 +32,7 @@
                     <th class="py-3 px-6">Nombre</th>
                     <th class="py-3 px-6">Apellido Paterno</th>
                     <th class="py-3 px-6">Apellido Materno</th>
-                    <th class="py-3 px-6">Acciones</th>
+                    <th class="py-3 px-6"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,12 +46,12 @@
                     <td class="py-3 px-6" th:text="${parent.apellido_materno}"></td>
                     <td class="py-3 px-6">
                         <div class="flex space-x-2">
-                            <!-- Botón para editar -->
-                            <button
-                                    class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded">
 <!--                                    th:onclick="'window.location.href=\'/students/edit/' + ${student.id}'">-->
-                                Editar
-                            </button>
+                                <a href="javascript:void(0);"
+                                   th:onclick="'abrirModalParentEdit(' + ${parent.idParent}+ ')'"
+                                   class="text-sm bg-sky-600 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-md transition-colors duration-200">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
 
 <!--                            &lt;!&ndash; Botón para inactivar &ndash;&gt;-->
 <!--                            <form th:action="@{/students/inactivate/{id}(id=${student.id})}" method="post">-->
