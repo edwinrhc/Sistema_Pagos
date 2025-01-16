@@ -29,7 +29,7 @@ public class Parent implements Serializable {
     private Long idParent;
 
     @Column(nullable = false)
-    private String tipo_doc;
+    private Integer tipo_doc;
 
     @Column(nullable = false)
     private String num_doc;
@@ -86,11 +86,11 @@ public class Parent implements Serializable {
         this.idParent = idParent;
     }
 
-    public String getTipo_doc() {
+    public Integer getTipo_doc() {
         return tipo_doc;
     }
 
-    public void setTipo_doc(String tipo_doc) {
+    public void setTipo_doc(Integer tipo_doc) {
         this.tipo_doc = tipo_doc;
     }
 
@@ -195,7 +195,7 @@ public class Parent implements Serializable {
     this.estado = 1;
     }
 
-    public Parent(Long idParent, String tipo_doc, String num_doc, String nombre, String apellido_paterno, String apellido_materno, String email, String telefono, Integer estado, Date createdAt, String createdBy, Date updatedAt, String updatedBy, List<Student> hijos) {
+    public Parent(Long idParent, Integer tipo_doc, String num_doc, String nombre, String apellido_paterno, String apellido_materno, String email, String telefono, Integer estado, Date createdAt, String createdBy, Date updatedAt, String updatedBy, List<Student> hijos) {
         this.idParent = idParent;
         this.tipo_doc = tipo_doc;
         this.num_doc = num_doc;
@@ -210,5 +210,14 @@ public class Parent implements Serializable {
         this.updatedAt = updatedAt;
         this.updatedBy = updatedBy;
         this.hijos = hijos;
+    }
+
+
+    public String getTipoDocDescrption(){
+        return switch (tipo_doc){
+            case 1 -> "DNI";
+            case 2 -> "C.EXT";
+            default -> "DNI";
+        };
     }
 }

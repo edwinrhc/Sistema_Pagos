@@ -4,6 +4,7 @@ import com.colegio.sam.sistemaspagos.entity.Student;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
@@ -22,14 +23,14 @@ public class ParentsDTO {
     private Long idParent;
 
 
-    @NotBlank(message = "El tipo de documento es obligatorio")
-    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", message = "El tipo de documento solo puede contener letras, espacios y el punto (.)")
-    private String tipo_doc;
+    @NotNull
+    private Integer tipo_doc;
 
     @NotBlank(message = "El número de documento es obligatorio")
-    @Pattern(regexp = "^(\\d{7,15}|[A-Za-z0-9\\.\\-]{7,15})$",
-            message = "El número de documento debe tener entre 7 y 15 caracteres alfanuméricos. Para documentos nacionales, solo se permiten números.")
+    @Pattern(regexp = "^[A-Za-z0-9]{3,15}$",
+            message = "El número de documento debe tener entre 3 y 15 caracteres alfanuméricos, sin caracteres especiales.")
     private String num_doc;
+
 
 
     @NotBlank(message = "El nombre es obligatorio")
@@ -73,11 +74,11 @@ public class ParentsDTO {
         this.idParent = idParent;
     }
 
-    public String getTipo_doc() {
+    public Integer getTipo_doc() {
         return tipo_doc;
     }
 
-    public void setTipo_doc(String tipo_doc) {
+    public void setTipo_doc(Integer tipo_doc) {
         this.tipo_doc = tipo_doc;
     }
 
