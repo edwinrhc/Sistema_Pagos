@@ -75,6 +75,39 @@ public class ParentsRestController {
     }
 
 
+    public ResponseEntity<?> update(@Validated @RequestBody ParentsDTO parentsDTO){
+        try {
+            // Buscar el registro
+            Parent parent = parentService.findOne(parentsDTO.getIdParent());
+            if(parent == null) {
+                return ResponseEntity.notFound().build();
+            }
+            // Actualizamos los campos
+            parent.setIdParent(parentsDTO.getIdParent());
+            parent.setTipo_doc(parentsDTO.getTipo_doc());
+            parent.setNum_doc(parentsDTO.getNum_doc());
+            parent.setNombre(parentsDTO.getNombre());
+            parent.setApellido_paterno(parentsDTO.getApellido_paterno());
+            parent.setApellido_materno(parentsDTO.getApellido_materno());
+            parent.setEmail(parentsDTO.getEmail());
+            parent.setTelefono(parentsDTO.getTelefono());
+            parent.setEstado(parentsDTO.getEstado());
+            // Guardamos el registro
+            parentService.guardarParent(parentsDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Registro actualizado exitosamente.");
+        }catch (IllegalArgumentException e){
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor: " + e.getMessage());
+        }
+
+    }
+
+
+
+
 
 
 }
