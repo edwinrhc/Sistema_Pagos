@@ -85,6 +85,49 @@ public class ParentServiceImpl implements IParentService {
     }
 
     @Override
+    public void actualizarParent(Long parentiId,ParentsDTO parentsDTO) throws ParseException {
+        try {
+            // Buscar el registro existente
+            Parent existingParent = parentRepository.findById(parentiId)
+                    .orElseThrow(() -> new IllegalArgumentException("El padre con ID " + parentiId + " no existe."));
+
+            // Validar si el correo ya está registrado en otro registro
+            boolean emailExistsInAnotherRecord = parentRepository.existsByEmailAndIdParentNot(parentsDTO.getEmail(),parentiId);
+            if(emailExistsInAnotherRecord) {
+                throw new IllegalArgumentException("El correo ya esta registrado");
+            }
+
+            // Actualizar los campos del registro existente
+            existingParent.setTipo_doc(parentsDTO.getTipo_doc());
+            existingParent.setNum_doc(parentsDTO.getNum_doc());
+            existingParent.setNombre(parentsDTO.getNombre());
+            existingParent.setApellido_paterno(parentsDTO.getApellido_paterno());
+            existingParent.setApellido_materno(parentsDTO.getApellido_materno());
+            existingParent.setEmail(parentsDTO.getEmail());
+            existingParent.setTelefono(parentsDTO.getTelefono());
+            existingParent.setEstado(parentsDTO.getEstado());
+
+            // Registrar el usuario que actualiza el registro
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.isAuthenticated()) {
+                String username = authentication.getName();
+                existingParent.setUpdatedBy(username); // Asume que tienes un campo para registrar el usuario que actualiza
+            } else {
+                throw new RuntimeException("Error al obtener el usuario autenticado");
+            }
+
+            // Guardar los cambios
+            parentRepository.save(existingParent);
+
+        } catch (IllegalArgumentException e) {
+            throw e;
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("Error al actualizar el registro de Padres" + e.getMessage(),e);
+        }
+    }
+
+    @Override
     public void validarCorreoUnico(String email) {
         if (parentRepository.existsByEmail(email)) {
             throw new RuntimeException("El correo ya esta registrado");

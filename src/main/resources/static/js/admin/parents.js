@@ -135,7 +135,10 @@ function guardarPadre() {
 
 
 function abrirModalParentEdit(idParent) {
-
+    if (!idParent) {
+        console.error("El ID del padre es inválido:", idParent);
+        return;
+    }
     //Capturamos los datos
     $.ajax({
         url: '/api/parents/get/' + idParent, type: 'GET', dataType: 'json', success: function (data) {
@@ -146,7 +149,7 @@ function abrirModalParentEdit(idParent) {
             
         <div class="mb-4">
             <!-- Select para Tipo de Documento -->
-            <input type="hidden" name="idParent" value="${data.idParent}">
+            <input type="text" id="idParent" name="idParent" value="${data.idParent}">
             <label for="tipo_doc" class="block font-semibold">Tipo de Documento:</label>
             <select id="tipo_doc" name="tipo_doc" 
                     class="w-full p-2 border rounded" 
@@ -191,7 +194,7 @@ function abrirModalParentEdit(idParent) {
             </div>
         
             <div class="flex justify-end mt-4">
-                <button type="button" onclick="guardarPadre()" class="bg-blue-600 text-white px-4 py-2 rounded-md mr-2">Guardar</button>
+                <button type="button" onclick="updatePadre()" class="bg-blue-600 text-white px-4 py-2 rounded-md mr-2">Actualizar</button>
                 <button type="button" onclick="cerrarModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cerrar</button>
             </div>
         </form>
@@ -221,14 +224,38 @@ function updatePadre() {
         telefono: $('#telefono').val().trim()
     };
 
+    console.log(parentsData);
+    // if (!validarDatosPadres(parentsData)) {
+    //     return;
+    // }
+
+
     $.ajax({
-        url: 'api/parents/update',
+        url: '/api/parents/update',
         type: 'POST',
         contentType: 'application/json',
+        data: JSON.stringify(parentsData),
         success: function (response) {
-
+            // Muestra la alerta de éxito solo si el registro fue exitoso
+            Swal.fire({
+                icon: 'success',
+                title: 'Actualización exitosa',
+                text: response,
+                confirmButtonText: 'Perfecto'
+            }).then(() => {
+                cerrarModal(); // Cierra el modal después de confirmar
+                location.reload(); // Refresca la página para ver los cambios
+            });
+        },  error: function (xhr, status, error) {
+            console.log("Error: ", xhr.responseText);
+            // Manejo de errores
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al actualizar',
+                text: xhr.responseText || 'Hubo un problema al intentar actualizar. Inténtelo nuevamente.',
+                confirmButtonText: 'Entendido'
+            });
         }
-
     });
 }
 

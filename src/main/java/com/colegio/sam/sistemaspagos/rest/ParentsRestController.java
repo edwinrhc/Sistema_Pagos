@@ -34,6 +34,10 @@ public class ParentsRestController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getParentsEdit(@PathVariable("id") Long id){
+        if (id == null) {
+            return ResponseEntity.badRequest().body("El ID no puede ser nulo");
+        }
+
         Parent parent = parentService.findOne(id);
 
         if(parent == null){
@@ -74,7 +78,7 @@ public class ParentsRestController {
 
     }
 
-
+    @PostMapping("/update")
     public ResponseEntity<?> update(@Validated @RequestBody ParentsDTO parentsDTO){
         try {
             // Buscar el registro
@@ -93,7 +97,7 @@ public class ParentsRestController {
             parent.setTelefono(parentsDTO.getTelefono());
             parent.setEstado(parentsDTO.getEstado());
             // Guardamos el registro
-            parentService.guardarParent(parentsDTO);
+            parentService.actualizarParent(parent.getIdParent(),parentsDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Registro actualizado exitosamente.");
         }catch (IllegalArgumentException e){
 

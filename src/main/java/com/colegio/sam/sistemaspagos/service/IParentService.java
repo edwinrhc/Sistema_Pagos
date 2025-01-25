@@ -16,5 +16,7 @@ public interface IParentService {
 
      void guardarParent(ParentsDTO parentsDTO) throws ParseException;
 
+     void actualizarParent(Long parentiId,ParentsDTO parentsDTO) throws ParseException;
+
      void validarCorreoUnico(String email);
 }
