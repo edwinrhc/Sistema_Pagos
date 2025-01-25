@@ -22,7 +22,6 @@ public class ParentsDTO {
 
     private Long idParent;
 
-
     @NotNull
     private Integer tipo_doc;
 
@@ -177,4 +176,5 @@ public class ParentsDTO {
     public void setEstado(Integer estado) {
         this.estado = estado;
     }
+
 }

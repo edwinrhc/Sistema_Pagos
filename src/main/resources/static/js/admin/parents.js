@@ -139,6 +139,7 @@ function abrirModalParentEdit(idParent) {
         console.error("El ID del padre es inválido:", idParent);
         return;
     }
+
     //Capturamos los datos
     $.ajax({
         url: '/api/parents/get/' + idParent, type: 'GET', dataType: 'json', success: function (data) {
@@ -149,7 +150,6 @@ function abrirModalParentEdit(idParent) {
             
         <div class="mb-4">
             <!-- Select para Tipo de Documento -->
-            <input type="text" id="idParent" name="idParent" value="${data.idParent}">
             <label for="tipo_doc" class="block font-semibold">Tipo de Documento:</label>
             <select id="tipo_doc" name="tipo_doc" 
                     class="w-full p-2 border rounded" 
@@ -194,7 +194,7 @@ function abrirModalParentEdit(idParent) {
             </div>
         
             <div class="flex justify-end mt-4">
-                <button type="button" onclick="updatePadre()" class="bg-blue-600 text-white px-4 py-2 rounded-md mr-2">Actualizar</button>
+                <button type="button" onclick="updatePadre('${idParent}')" class="bg-blue-600 text-white px-4 py-2 rounded-md mr-2">Actualizar</button>
                 <button type="button" onclick="cerrarModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cerrar</button>
             </div>
         </form>
@@ -212,9 +212,9 @@ function abrirModalParentEdit(idParent) {
 }
 
 
-function updatePadre() {
+function updatePadre(idParent) {
     const parentsData = {
-        idParent: $('#idParent').val(),
+        // idParent: $('#idParent').val(),
         tipo_doc: $('#tipo_doc').val().trim(),
         num_doc: limpiarEspacios($('#num_doc').val()),
         nombre: limpiarEspacios($('#nombre').val()),
@@ -224,14 +224,13 @@ function updatePadre() {
         telefono: $('#telefono').val().trim()
     };
 
-    console.log(parentsData);
-    // if (!validarDatosPadres(parentsData)) {
-    //     return;
-    // }
+    if (!validarDatosPadres(parentsData)) {
+        return;
+    }
 
 
     $.ajax({
-        url: '/api/parents/update',
+        url: '/api/parents/update/' + idParent,
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(parentsData),
@@ -294,6 +293,7 @@ function validarDatosPadres(datos) {
     };
 
     for (const [campo, valor] of Object.entries(datos)) {
+
         if (!valor.trim()) {
             Swal.fire({
                 icon: 'warning',
@@ -356,34 +356,34 @@ function validarDatosPadres(datos) {
         }
     }
 
-    const tipoDoc = datos.tipo_doc;
-    const numDoc = datos.num_doc;
-    const reglas = reglasTipoDocumento[tipoDoc];
+        const tipoDoc = datos.tipo_doc;
+        const numDoc = datos.num_doc;
+        const reglas = reglasTipoDocumento[tipoDoc];
 
-    if (reglas) {
-        if (!reglas.regex.test(numDoc)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Número de documento inválido',
-                text: reglas.mensaje,
-                confirmButtonText: 'Entendido'
-            });
-            return false;
+        if (reglas) {
+            if (!reglas.regex.test(numDoc)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Número de documento inválido',
+                    text: reglas.mensaje,
+                    confirmButtonText: 'Entendido'
+                });
+                return false;
+            }
+            if (
+                (reglas.longitud && numDoc.length !== reglas.longitud) ||
+                (reglas.longitudMin && numDoc.length < reglas.longitudMin) ||
+                (reglas.longitudMax && numDoc.length > reglas.longitudMax)
+            ) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Número de documento inválido',
+                    text: reglas.mensaje,
+                    confirmButtonText: 'Entendido'
+                });
+                return false;
+            }
         }
-        if (
-            (reglas.longitud && numDoc.length !== reglas.longitud) ||
-            (reglas.longitudMin && numDoc.length < reglas.longitudMin) ||
-            (reglas.longitudMax && numDoc.length > reglas.longitudMax)
-        ) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Número de documento inválido',
-                text: reglas.mensaje,
-                confirmButtonText: 'Entendido'
-            });
-            return false;
-        }
-    }
 
     return true;
 }
