@@ -26,20 +26,26 @@
       <table class="table-auto w-full text-left bg-gray-100 rounded-lg">
         <thead>
         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-          <th class="py-3 px-6">ID</th>
+
+          <th class="py-3 px-6">Tido Doc</th>
+          <th class="py-3 px-6">DNI</th>
           <th class="py-3 px-6">Nombre</th>
-          <th class="py-3 px-6">Apellido</th>
-          <th class="py-3 px-6">Padre</th>
+          <th class="py-3 px-6">Apellido Paterno</th>
+          <th class="py-3 px-6">Apellido Materno</th>
+<!--          <th class="py-3 px-6">Padre</th>-->
           <th class="py-3 px-6">Acciones</th>
         </tr>
         </thead>
         <tbody>
         <!-- Ejemplo de iteración Thymeleaf -->
         <tr th:each="student : ${students}" class="border-b border-gray-200 hover:bg-gray-100">
-          <td class="py-3 px-6" th:text="${student.id}"></td>
+
+          <td class="py-3 px-6" th:text="${student.tipo_doc}"></td>
+          <td class="py-3 px-6" th:text="${student.num_doc}"></td>
           <td class="py-3 px-6" th:text="${student.nombre}"></td>
-          <td class="py-3 px-6" th:text="${student.apellido}"></td>
-          <td class="py-3 px-6" th:text="${student.parent.nombre + ' ' + student.parent.apellido}"></td>
+          <td class="py-3 px-6" th:text="${student.apellido_paterno}"></td>
+          <td class="py-3 px-6" th:text="${student.apellido_materno}"></td>
+          <!--          <td class="py-3 px-6" th:text="${student.parent.nombre + ' ' + student.parent.apellido}"></td>-->
           <td class="py-3 px-6">
             <div class="flex space-x-2">
               <!-- Botón para editar -->
@@ -61,8 +67,8 @@
           </td>
         </tr>
         <!-- Mostrar mensaje si no hay estudiantes -->
-        <tr th:if="${#lists.isEmpty(students)}">
-          <td colspan="5" class="text-center text-gray-500 py-4">No hay estudiantes registrados.</td>
+        <tr  th:if="${#lists.isEmpty(students)}">
+          <td colspan="7" class="text-center text-gray-500 py-4">No hay estudiantes registrados.</td>
         </tr>
         </tbody>
       </table>

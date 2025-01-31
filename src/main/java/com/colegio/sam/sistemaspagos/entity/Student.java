@@ -15,10 +15,19 @@ public class Student {
     private Long idStudent;
 
     @Column(nullable = false)
+    private Integer tipo_doc;
+
+    @Column(nullable = false)
+    private String num_doc;
+
+    @Column(nullable = false)
     private String nombre;
 
     @Column(nullable = false)
-    private String apellido;
+    private String apellido_paterno;
+
+    @Column(nullable = false)
+    private String apellido_materno;
 
     @ManyToOne
     @JoinColumn(
