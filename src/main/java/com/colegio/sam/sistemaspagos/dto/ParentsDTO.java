@@ -54,7 +54,7 @@ public class ParentsDTO {
     private String telefono;
 
 
-    private Integer estado;
+    private Integer estado = 1;
 
 
     private Date createdAt;

@@ -67,6 +67,11 @@ public class Parent implements Serializable {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<Student> hijos;
 
+    @OneToOne
+    @JoinColumn(name ="user_id", unique = true)
+    private User user;
+
+
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
@@ -195,23 +200,35 @@ public class Parent implements Serializable {
     this.estado = 1;
     }
 
-    public Parent(Long idParent, Integer tipo_doc, String num_doc, String nombre, String apellido_paterno, String apellido_materno, String email, String telefono, Integer estado, Date createdAt, String createdBy, Date updatedAt, String updatedBy, List<Student> hijos) {
-        this.idParent = idParent;
-        this.tipo_doc = tipo_doc;
-        this.num_doc = num_doc;
-        this.nombre = nombre;
-        this.apellido_paterno = apellido_paterno;
-        this.apellido_materno = apellido_materno;
-        this.email = email;
-        this.telefono = telefono;
-        this.estado = estado;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
-        this.updatedAt = updatedAt;
-        this.updatedBy = updatedBy;
-        this.hijos = hijos;
+    public User getUser() {
+        return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Parent{" +
+                "idParent=" + idParent +
+                ", tipo_doc=" + tipo_doc +
+                ", num_doc='" + num_doc + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido_paterno='" + apellido_paterno + '\'' +
+                ", apellido_materno='" + apellido_materno + '\'' +
+                ", email='" + email + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", estado=" + estado +
+                ", createdAt=" + createdAt +
+                ", createdBy='" + createdBy + '\'' +
+                ", updatedAt=" + updatedAt +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", hijos=" + hijos +
+                ", user=" + user +
+                '}';
+    }
 
     public String getTipoDocDescrption(){
         return switch (tipo_doc){

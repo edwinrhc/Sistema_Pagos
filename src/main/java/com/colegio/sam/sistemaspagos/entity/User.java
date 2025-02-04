@@ -18,6 +18,9 @@ public class User {
     private String password;
     private String roles;
 
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    private Parent parent;
+
     public Long getId() {
         return id;
     }
@@ -48,5 +51,14 @@ public class User {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+
+    public Parent getParent() {
+        return parent;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 }

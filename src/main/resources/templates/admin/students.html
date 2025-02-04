@@ -33,7 +33,7 @@
           <th class="py-3 px-6">Apellido Paterno</th>
           <th class="py-3 px-6">Apellido Materno</th>
 <!--          <th class="py-3 px-6">Padre</th>-->
-          <th class="py-3 px-6">Acciones</th>
+          <!-- <th class="py-3 px-6">Acciones</th> -->
         </tr>
         </thead>
         <tbody>
@@ -46,16 +46,16 @@
           <td class="py-3 px-6" th:text="${student.apellido_paterno}"></td>
           <td class="py-3 px-6" th:text="${student.apellido_materno}"></td>
           <!--          <td class="py-3 px-6" th:text="${student.parent.nombre + ' ' + student.parent.apellido}"></td>-->
-          <td class="py-3 px-6">
+          <!-- <td class="py-3 px-6">
             <div class="flex space-x-2">
-              <!-- Botón para editar -->
+
               <button
                       class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded"
                       th:onclick="'window.location.href=\'/students/edit/' + ${student.id}'">
                 Editar
               </button>
 
-              <!-- Botón para inactivar -->
+
               <form th:action="@{/students/inactivate/{id}(id=${student.id})}" method="post">
                 <button
                         type="submit"
@@ -64,7 +64,7 @@
                 </button>
               </form>
             </div>
-          </td>
+          </td> -->
         </tr>
         <!-- Mostrar mensaje si no hay estudiantes -->
         <tr  th:if="${#lists.isEmpty(students)}">
