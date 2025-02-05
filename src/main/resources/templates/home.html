@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 <head th:replace="fragments/head :: head"></head>
 
 <body class="bg-gray-100 flex flex-col min-h-screen">
@@ -9,7 +10,10 @@
 <!-- Contenido principal -->
 <main class="flex-grow">
     <div class="container mx-auto p-6 bg-white shadow-md rounded-lg mt-4">
-        <h1 class="text-4xl font-bold text-center text-gray-700 mb-6">¡Bienvenido al Sistema de Pagos SAM!</h1>
+        <h1 class="text-4xl font-bold text-center text-gray-700 mb-6"
+            th:text="'¡Bienvenido, ' + ${nombreUsuario} + '! al Sistema de Pagos SAM!'">
+        </h1>
+
         <p class="text-center text-gray-600 mb-8">Aquí podrás gestionar y realizar los pagos escolares de manera segura y eficiente.</p>
 
         <!-- Tarjetas de navegación a las funcionalidades -->
@@ -29,7 +33,7 @@
             </div>
 
             <!-- Tarjeta 3 -->
-            <div class="bg-yellow-100 p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
+            <div  sec:authorize="hasAuthority('ADMIN')" class="bg-yellow-100 p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
                 <h2 class="text-xl font-bold text-yellow-600">Reportes</h2>
                 <p class="text-gray-600">Genera reportes detallados sobre los pagos escolares.</p>
                 <a th:href="@{/reportes}" class="text-yellow-500 hover:underline mt-2 inline-block">Ir a Reportes →</a>

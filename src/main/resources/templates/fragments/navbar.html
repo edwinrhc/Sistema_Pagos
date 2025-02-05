@@ -20,17 +20,17 @@
         </div>
 
         <!-- Enlaces de navegación -->
-        <div class="hidden md:flex space-x-6">
+        <div   class="hidden md:flex space-x-6">
             <a th:href="@{/home}" class="text-black hover:text-gray-300">Inicio</a>
         </div>
 
         <!-- Enlaces de navegación -->
-        <div class="hidden md:flex space-x-6">
+        <div sec:authorize="hasAuthority('ADMIN')"  class="hidden md:flex space-x-6">
             <a th:href="@{/admin}" class="text-black hover:text-gray-300">Panel Administrador</a>
         </div>
 
         <!-- Enlaces de navegación -->
-        <div class="hidden md:flex space-x-6">
+        <div sec:authorize="hasAuthority('ADMIN')" class="hidden md:flex space-x-6">
             <a th:href="@{/admin}" class="text-black hover:text-gray-300">Reportes</a>
         </div>
 
