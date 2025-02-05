@@ -2,7 +2,9 @@ package com.colegio.sam.sistemaspagos.service.impl;
 
 import com.colegio.sam.sistemaspagos.dto.ParentsDTO;
 import com.colegio.sam.sistemaspagos.entity.Parent;
+import com.colegio.sam.sistemaspagos.entity.User;
 import com.colegio.sam.sistemaspagos.repository.ParentRepository;
+import com.colegio.sam.sistemaspagos.repository.UserRepository;
 import com.colegio.sam.sistemaspagos.service.IParentService;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -10,9 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,6 +27,12 @@ public class ParentServiceImpl implements IParentService {
 
     @Autowired
     private ParentRepository parentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<Parent> getAllParents() {
@@ -56,6 +66,22 @@ public class ParentServiceImpl implements IParentService {
             }
 
             Parent parent = new Parent();
+
+            // si el padre cuenta con usuario, usarlo; de lo contrario crear uno nuevo
+            User user;
+            if(parent.getUser() != null) {
+                user = parent.getUser();
+            }else{
+                user = new User();
+                user.setRoles("USER");
+            }
+
+            // Asignar valores a User;
+            user.setUsername(parentsDTO.getEmail());
+            user.setPassword(passwordEncoder.encode(parentsDTO.getNum_doc()));
+
+            user  = userRepository.save(user);
+
             parent.setTipo_doc(parentsDTO.getTipo_doc());
             parent.setNum_doc(parentsDTO.getNum_doc());
             parent.setNombre(parentsDTO.getNombre());
@@ -73,6 +99,8 @@ public class ParentServiceImpl implements IParentService {
             } else {
                 throw new RuntimeException("Error al obtener el usuario autenticado");
             }
+
+            parent.setUser(user);
 
             parentRepository.save(parent);
         } catch (IllegalArgumentException e) {
@@ -107,11 +135,21 @@ public class ParentServiceImpl implements IParentService {
             existingParent.setTelefono(parentsDTO.getTelefono());
             existingParent.setEstado(parentsDTO.getEstado());
 
+            // Obtener usuario asociado
+            User user = existingParent.getUser();
+            if(user != null){
+                // Actualizar el username del usuario en la tabla user
+                user.setUsername(parentsDTO.getEmail());
+                userRepository.save(user);
+            }
+
+
             // Registrar el usuario que actualiza el registro
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null && authentication.isAuthenticated()) {
                 String username = authentication.getName();
                 existingParent.setUpdatedBy(username); // Asume que tienes un campo para registrar el usuario que actualiza
+                existingParent.setUpdatedAt(new Date());
             } else {
                 throw new RuntimeException("Error al obtener el usuario autenticado");
             }

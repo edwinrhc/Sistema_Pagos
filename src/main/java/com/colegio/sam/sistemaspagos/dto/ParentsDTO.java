@@ -65,6 +65,7 @@ public class ParentsDTO {
 //    @JsonProperty("hijos")
     private List<Student> hijos;
 
+
     public Long getIdParent() {
         return idParent;
     }
@@ -176,5 +177,7 @@ public class ParentsDTO {
     public void setEstado(Integer estado) {
         this.estado = estado;
     }
+
+
 
 }
