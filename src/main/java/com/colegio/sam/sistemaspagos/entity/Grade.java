@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class Grade {
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Student> estudiantes;
 
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private String createdBy;
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
     private String updatedBy;
 }
